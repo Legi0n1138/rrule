@@ -373,6 +373,9 @@ export default class ToText {
       case -1: {
         return 'last'
       }
+      default: {
+        return ''
+      }
     }
   }
 
