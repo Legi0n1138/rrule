@@ -62,5 +62,3 @@ export interface ParsedOptions extends Options {
 }
 
 export type ByWeekday = WeekdayStr | number | Weekday
-
-export type acceptableSetPosValues = 1 | 2 | 3 | 4 | 5 | -1

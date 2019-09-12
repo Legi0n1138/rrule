@@ -1,6 +1,6 @@
 import ENGLISH, { Language } from './i18n'
 import RRule from '../index'
-import { Options, ByWeekday, acceptableSetPosValues, } from '../types'
+import { Options, ByWeekday } from '../types'
 import { Weekday } from '../weekday'
 import { isArray, isNumber, isPresent, padStart } from '../helpers'
 
@@ -353,7 +353,7 @@ export default class ToText {
     // this.add(gettext('DAY'))
   }
 
-  private addSetPos (setPos: acceptableSetPosValues) {
+  private addSetPos (setPos: Options['bysetpos']) {
     switch (setPos) {
       case 1: {
         return 'first'
