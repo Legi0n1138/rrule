@@ -3142,7 +3142,7 @@ var totext_ToText = /** @class */ (function () {
         }
         // this.add(gettext('DAY'))
     };
-    ToText.prototype.addSetPos = function (setPos) {
+    ToText.prototype.getSetPos = function (setPos) {
         switch (setPos) {
             case 1: {
                 return 'first';
@@ -3171,7 +3171,7 @@ var totext_ToText = /** @class */ (function () {
         var gettext = this.gettext;
         if (this.byweekday.allWeeks && !this.byweekday.isWeekdays) {
             if (this.options.bysetpos) {
-                this.addSetPos(this.options.bysetpos);
+                this.add(this.getSetPos(this.options.bysetpos));
             }
             this.add(gettext('on')).add(this.list(this.byweekday.allWeeks, this.weekdaytext));
         }
@@ -3179,7 +3179,7 @@ var totext_ToText = /** @class */ (function () {
             if (this.byweekday.allWeeks)
                 this.add(gettext('and'));
             if (this.options.bysetpos) {
-                this.addSetPos(this.options.bysetpos);
+                this.add(this.getSetPos(this.options.bysetpos));
             }
             this.add(gettext('on the')).add(this.list(this.byweekday.someWeeks, this.weekdaytext, gettext('and')));
         }
