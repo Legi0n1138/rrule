@@ -1,6 +1,6 @@
 import ENGLISH, { Language } from './i18n'
 import RRule from '../index'
-import { Options, ByWeekday } from '../types'
+import { Options, ByWeekday, acceptableSetPosValues, } from '../types'
 import { Weekday } from '../weekday'
 import { isArray, isNumber, isPresent, padStart } from '../helpers'
 
@@ -353,9 +353,35 @@ export default class ToText {
     // this.add(gettext('DAY'))
   }
 
+  private addSetPos (setPos: acceptableSetPosValues) {
+    switch (setPos) {
+      case 1: {
+        return 'first'
+      }
+      case 2: {
+        return 'second'
+      }
+      case 3: {
+        return 'third'
+      }
+      case 4: {
+        return 'fourth'
+      }
+      case 5: {
+        return 'fifth'
+      }
+      case -1: {
+        return 'last'
+      }
+    }
+  }
+
   private _byweekday () {
     const gettext = this.gettext
     if (this.byweekday!.allWeeks && !this.byweekday!.isWeekdays) {
+      if (this.options.bysetpos) {
+        this.addSetPos(this.options.bysetpos)
+      }
       this.add(gettext('on')).add(
         this.list(this.byweekday!.allWeeks!, this.weekdaytext)
       )
@@ -363,7 +389,9 @@ export default class ToText {
 
     if (this.byweekday!.someWeeks) {
       if (this.byweekday!.allWeeks) this.add(gettext('and'))
-
+      if (this.options.bysetpos) {
+        this.addSetPos(this.options.bysetpos)
+      }
       this.add(gettext('on the')).add(
         this.list(this.byweekday!.someWeeks!, this.weekdaytext, gettext('and'))
       )
