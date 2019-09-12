@@ -353,7 +353,7 @@ export default class ToText {
     // this.add(gettext('DAY'))
   }
 
-  private addSetPos (setPos: Options['bysetpos']) {
+  private getSetPos (setPos: Options['bysetpos']) {
     switch (setPos) {
       case 1: {
         return 'first'
@@ -383,7 +383,7 @@ export default class ToText {
     const gettext = this.gettext
     if (this.byweekday!.allWeeks && !this.byweekday!.isWeekdays) {
       if (this.options.bysetpos) {
-        this.addSetPos(this.options.bysetpos)
+        this.add(this.getSetPos(this.options.bysetpos))
       }
       this.add(gettext('on')).add(
         this.list(this.byweekday!.allWeeks!, this.weekdaytext)
@@ -393,7 +393,7 @@ export default class ToText {
     if (this.byweekday!.someWeeks) {
       if (this.byweekday!.allWeeks) this.add(gettext('and'))
       if (this.options.bysetpos) {
-        this.addSetPos(this.options.bysetpos)
+        this.add(this.getSetPos(this.options.bysetpos))
       }
       this.add(gettext('on the')).add(
         this.list(this.byweekday!.someWeeks!, this.weekdaytext, gettext('and'))

@@ -45,7 +45,7 @@ export default class ToText {
     MONTHLY(): void;
     YEARLY(): void;
     private _bymonthday;
-    private addSetPos;
+    private getSetPos;
     private _byweekday;
     private _byhour;
     private _bymonth;
