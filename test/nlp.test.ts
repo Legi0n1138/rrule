@@ -29,6 +29,8 @@ const texts = [
   ['Every week for 20 times', 'RRULE:FREQ=WEEKLY;COUNT=20']
 ]
 
+const additionalToText = ['Every month on third weekday', 'RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=3']
+
 describe('NLP', () => {
   it('fromText()', function () {
     texts.forEach(function (item) {
@@ -39,7 +41,7 @@ describe('NLP', () => {
   })
 
   it('toText()', function () {
-    texts.forEach(function (item) {
+    [...texts, additionalToText].forEach(function (item) {
       const text = item[0]
       const str = item[1]
       expect(RRule.fromString(str).toText().toLowerCase()).equals(text.toLowerCase(),
