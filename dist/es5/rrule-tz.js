@@ -10931,7 +10931,12 @@ var totext_ToText = /** @class */ (function () {
             this._bymonthday();
         }
         else if (this.byweekday && this.byweekday.isWeekdays) {
-            this.add(gettext('on')).add(gettext('weekdays'));
+            if (this.options.bysetpos) {
+                this.add(gettext('on')).add(this.getSetPos(this.options.bysetpos)).add(gettext('weekday'));
+            }
+            else {
+                this.add(gettext('on')).add(gettext('weekdays'));
+            }
         }
         else if (this.byweekday) {
             this._byweekday();
@@ -10987,7 +10992,7 @@ var totext_ToText = /** @class */ (function () {
         // this.add(gettext('DAY'))
     };
     ToText.prototype.getSetPos = function (setPos) {
-        switch (setPos) {
+        switch (Array.isArray(setPos) && setPos[0] ? setPos[0] : setPos) {
             case 1: {
                 return 'first';
             }
@@ -11014,18 +11019,20 @@ var totext_ToText = /** @class */ (function () {
     ToText.prototype._byweekday = function () {
         var gettext = this.gettext;
         if (this.byweekday.allWeeks && !this.byweekday.isWeekdays) {
+            this.add(gettext('on'));
             if (this.options.bysetpos) {
                 this.add(this.getSetPos(this.options.bysetpos));
             }
-            this.add(gettext('on')).add(this.list(this.byweekday.allWeeks, this.weekdaytext));
+            this.add(this.list(this.byweekday.allWeeks, this.weekdaytext));
         }
         if (this.byweekday.someWeeks) {
             if (this.byweekday.allWeeks)
                 this.add(gettext('and'));
+            this.add(gettext('on the'));
             if (this.options.bysetpos) {
                 this.add(this.getSetPos(this.options.bysetpos));
             }
-            this.add(gettext('on the')).add(this.list(this.byweekday.someWeeks, this.weekdaytext, gettext('and')));
+            this.add(this.list(this.byweekday.someWeeks, this.weekdaytext, gettext('and')));
         }
     };
     ToText.prototype._byhour = function () {

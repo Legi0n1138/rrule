@@ -27,7 +27,7 @@
   "scripts": {
     "build": "yarn lint && tsc && webpack && tsc dist/esm/**/*.d.ts",
     "lint": "yarn tslint --project . --fix --config tslint.json",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha **/*.test.ts",
+    "test": "cross-env TS_NODE_PROJECT=tsconfig.test.json mocha **/*.test.ts",
     "test-ci": "TS_NODE_PROJECT=tsconfig.test.json nyc mocha **/*.test.ts"
   },
   "nyc": {
@@ -84,6 +84,7 @@
   },
   "peerDependencies": {},
   "dependencies": {
+    "cross-env": "^5.2.1",
     "tslib": "^1.9.0"
   }
 }

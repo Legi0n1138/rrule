@@ -289,7 +289,11 @@ export default class ToText {
     if (this.bymonthday) {
       this._bymonthday()
     } else if (this.byweekday && this.byweekday.isWeekdays) {
-      this.add(gettext('on')).add(gettext('weekdays'))
+      if (this.options.bysetpos) {
+        this.add(gettext('on')).add(this.getSetPos(this.options.bysetpos)).add(gettext('weekday'))
+      } else {
+        this.add(gettext('on')).add(gettext('weekdays'))
+      }
     } else if (this.byweekday) {
       this._byweekday()
     }
@@ -354,7 +358,7 @@ export default class ToText {
   }
 
   private getSetPos (setPos: Options['bysetpos']) {
-    switch (setPos) {
+    switch (Array.isArray(setPos) && setPos[0] ? setPos[0] : setPos) {
       case 1: {
         return 'first'
       }
@@ -382,20 +386,22 @@ export default class ToText {
   private _byweekday () {
     const gettext = this.gettext
     if (this.byweekday!.allWeeks && !this.byweekday!.isWeekdays) {
+      this.add(gettext('on'))
       if (this.options.bysetpos) {
         this.add(this.getSetPos(this.options.bysetpos))
       }
-      this.add(gettext('on')).add(
+      this.add(
         this.list(this.byweekday!.allWeeks!, this.weekdaytext)
       )
     }
 
     if (this.byweekday!.someWeeks) {
       if (this.byweekday!.allWeeks) this.add(gettext('and'))
+      this.add(gettext('on the'))
       if (this.options.bysetpos) {
         this.add(this.getSetPos(this.options.bysetpos))
       }
-      this.add(gettext('on the')).add(
+      this.add(
         this.list(this.byweekday!.someWeeks!, this.weekdaytext, gettext('and'))
       )
     }
